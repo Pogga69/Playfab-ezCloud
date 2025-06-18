@@ -47,6 +47,7 @@ function runCloudScript() {
       GeneratePlayStreamEvent: true
     }, result => {
       showToast("success", "✅ Success", "Function ran successfully");
+      saveToRecent(functionName, args);
       document.getElementById("result").textContent = JSON.stringify(result, null, 2);
       switchTab("output");
     }, error => {
@@ -67,6 +68,52 @@ function switchTab(name) {
     if (tab.dataset.tab === name) tab.classList.add("active");
   });
 }
+
+const recentCalls = {};
+
+function saveToRecent(functionName, args) {
+  const key = functionName;
+  recentCalls[key] = recentCalls[key] || { count: 0, args };
+  recentCalls[key].count++;
+
+  renderRecent();
+}
+
+function renderRecent() {
+  const container = document.getElementById("recent-list");
+  container.innerHTML = "";
+
+  Object.entries(recentCalls).forEach(([name, data]) => {
+    const item = document.createElement("div");
+    item.innerHTML = `
+      <div style="margin-bottom: 12px;">
+        <span style="font-weight: bold;">${name} (${data.count})</span>
+        <button onclick="loadRecent('${name}')">Open</button>
+        <button onclick="reExecute('${name}')">Execute</button>
+      </div>
+    `;
+    container.appendChild(item);
+  });
+}
+
+function loadRecent(name) {
+  const data = recentCalls[name];
+  if (data) {
+    document.getElementById("functionName").value = name;
+    document.getElementById("arguments").value = JSON.stringify(data.args, null, 2);
+    switchTab("run");
+  }
+}
+
+function reExecute(name) {
+  const data = recentCalls[name];
+  if (data) {
+    document.getElementById("functionName").value = name;
+    document.getElementById("arguments").value = JSON.stringify(data.args, null, 2);
+    runCloudScript();
+  }
+}
+
 
 document.querySelectorAll(".tab").forEach(tab => {
   tab.addEventListener("click", () => {
