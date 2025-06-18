@@ -1,17 +1,128 @@
-/* Basic styles for the webpage */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #000;
+  color: #eee;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
 }
 
-h1 {
-    color: #333;
-    text-align: center;
+.sidebar {
+  width: 100px;
+  background-color: #111;
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-p {
-    color: #666;
-    text-align: center;
+.tab {
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  color: #aaa;
+  padding: 10px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tab.active {
+  background: #0078d4;
+  color: #fff;
+  border-radius: 8px;
+}
+
+.main {
+  flex-grow: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+label {
+  display: block;
+  margin: 16px 0 6px;
+  font-weight: 600;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1.5px solid #333;
+  background: #111;
+  color: #eee;
+  font-size: 1rem;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+button {
+  margin-top: 24px;
+  padding: 16px;
+  background: #0078d4;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #005fa3;
+}
+
+pre#result {
+  background: #1e1e1e;
+  color: #dcdcdc;
+  padding: 20px;
+  border-radius: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+#notifications {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+.toast {
+  background-color: #222;
+  padding: 12px 20px;
+  border-radius: 10px;
+  color: white;
+  margin-top: 12px;
+  animation: fadeIn 0.3s forwards, fadeOut 0.4s 3.6s forwards;
+}
+
+.toast.success {
+  background-color: #28a745;
+}
+
+.toast.error {
+  background-color: #dc3545;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; transform: translateY(20px); }
 }
