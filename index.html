@@ -18,6 +18,8 @@
   <div class="main">
     <section id="run" class="tab-content active">
       <h1>PlayFab EzCloud</h1>
+      <h2>Simple cloudscript runner</h2>
+      <h2>cannot run scrpts that inlcudes server.banusers or any high level arg</h2>
       <label for="titleId">Title ID</label>
       <input id="titleId" placeholder="Enter Title ID" />
 
@@ -25,13 +27,13 @@
       <input id="functionName" placeholder="Enter CloudScript Function Name" />
 
       <label for="arguments">Arguments (JSON)</label>
-      <textarea id="arguments" placeholder='e.g. { "score": 42, "level": 5 }'></textarea>
+      <textarea id="arguments" placeholder='ur agrs here'></textarea>
 
       <button onclick="runCloudScript()">Execute CloudScript</button>
     </section>
 
-    <section id="saved" class="tab-content">Coming soon…</section>
-    <section id="recent" class="tab-content">no calls yet…</section>
+    <section id="saved" class="tab-content">nothing</section>
+    <section id="recent" class="tab-content">nothing</section>
     <section id="output" class="tab-content">
       <pre id="result">// Output will appear here…</pre>
     </section>
