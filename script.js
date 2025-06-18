@@ -69,12 +69,23 @@ function switchTab(name) {
   });
 }
 
-const recentCalls = {};
+const recentCalls = [];
 
 function saveToRecent(functionName, args) {
-  const key = functionName;
-  recentCalls[key] = recentCalls[key] || { count: 0, args };
-  recentCalls[key].count++;
+  const match = recentCalls.find(entry =>
+    entry.name === functionName &&
+    JSON.stringify(entry.args) === JSON.stringify(args)
+  );
+
+  if (match) {
+    match.count++;
+  } else {
+    recentCalls.unshift({
+      name: functionName,
+      args,
+      count: 1
+    });
+  }
 
   renderRecent();
 }
@@ -83,37 +94,41 @@ function renderRecent() {
   const container = document.getElementById("recent-list");
   container.innerHTML = "";
 
-  Object.entries(recentCalls).forEach(([name, data]) => {
+  if (recentCalls.length === 0) {
+    container.textContent = "No recent calls yet.";
+    return;
+  }
+
+  recentCalls.forEach(({ name, args, count }, index) => {
     const item = document.createElement("div");
     item.innerHTML = `
       <div style="margin-bottom: 12px;">
-        <span style="font-weight: bold;">${name} (${data.count})</span>
-        <button onclick="loadRecent('${name}')">Open</button>
-        <button onclick="reExecute('${name}')">Execute</button>
+        <span style="font-weight: bold;">${name} (${count})</span><br>
+        <button onclick="loadRecent(${index})">Open</button>
+        <button style="margin-left: 12px;" onclick="reExecute(${index})">Execute</button>
       </div>
     `;
     container.appendChild(item);
   });
 }
 
-function loadRecent(name) {
-  const data = recentCalls[name];
+function loadRecent(index) {
+  const data = recentCalls[index];
   if (data) {
-    document.getElementById("functionName").value = name;
+    document.getElementById("functionName").value = data.name;
     document.getElementById("arguments").value = JSON.stringify(data.args, null, 2);
     switchTab("run");
   }
 }
 
-function reExecute(name) {
-  const data = recentCalls[name];
+function reExecute(index) {
+  const data = recentCalls[index];
   if (data) {
-    document.getElementById("functionName").value = name;
+    document.getElementById("functionName").value = data.name;
     document.getElementById("arguments").value = JSON.stringify(data.args, null, 2);
     runCloudScript();
   }
 }
-
 
 document.querySelectorAll(".tab").forEach(tab => {
   tab.addEventListener("click", () => {
