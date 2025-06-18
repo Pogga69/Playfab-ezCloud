@@ -1,14 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PlayFab EzCloud</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://download.playfab.com/PlayFabClientApi.js"></script>
 </head>
 <body>
-    <h1>Welcome to index.html</h1>
-    <p>This is the main page.</p>
-    <script src="script.js"></script>
+  <div class="sidebar">
+    <div class="tab active" data-tab="run">▶️ Run</div>
+    <div class="tab" data-tab="saved">💾 Saved</div>
+    <div class="tab" data-tab="recent">🕓 Recent</div>
+    <div class="tab" data-tab="output">📤 Output</div>
+  </div>
+
+  <div class="main">
+    <section id="run" class="tab-content active">
+      <h1>PlayFab EzCloud</h1>
+      <label for="titleId">Title ID</label>
+      <input id="titleId" placeholder="Enter Title ID" />
+
+      <label for="functionName">Function Name</label>
+      <input id="functionName" placeholder="Enter CloudScript Function Name" />
+
+      <label for="arguments">Arguments (JSON)</label>
+      <textarea id="arguments" placeholder='e.g. { "score": 42, "level": 5 }'></textarea>
+
+      <button onclick="runCloudScript()">Execute CloudScript</button>
+    </section>
+
+    <section id="saved" class="tab-content">Coming soon…</section>
+    <section id="recent" class="tab-content">Coming soon…</section>
+    <section id="output" class="tab-content">
+      <pre id="result">// Output will appear here…</pre>
+    </section>
+  </div>
+
+  <div id="notifications"></div>
+  <script src="script.js"></script>
 </body>
 </html>
