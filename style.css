@@ -91,8 +91,10 @@ pre#result {
   color: #dcdcdc;
   padding: 20px;
   border-radius: 10px;
-  max-height: 300px;
+  min-height: 60vh;
+  max-height: none;
   overflow-y: auto;
+  white-space: pre-wrap;
 }
 
 #notifications {
